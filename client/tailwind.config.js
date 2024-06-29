@@ -16,6 +16,7 @@ export default {
         'light-gray': '#D6DBD4',
         'creme': '#F9F6E5',
         'buzz-gold': '#EAAA00',
+        'red-error': '#E04F39'
       },
     },
   },
