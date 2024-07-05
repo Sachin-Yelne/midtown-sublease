@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
+import { useSelector } from "react-redux";
 import "swiper/css/bundle";
 import {
     FaBath,
@@ -13,6 +14,8 @@ import {
     FaParking,
     FaShare,
   } from 'react-icons/fa';
+import { current } from "@reduxjs/toolkit";
+import Contact from "../components/Contact";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -20,7 +23,9 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
+  const [contact, setContact] = useState(false)
   const params = useParams();
+  const {currentUser} = useSelector((state) => state.user)
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -91,11 +96,11 @@ export default function Listing() {
             </p>
             <div className='flex gap-4'>
               <p className='bg-red-error w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
+                {listing.type === 'rent' ? 'For Rent' : 'For Sale!'}
               </p>
               {listing.offer && (
                 <p className='bg-green-700 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  Save ${+listing.regularPrice - +listing.discountPrice} / Month
+                  Discounted ${+listing.regularPrice - +listing.discountPrice} / Month
                 </p>
               )}
             </div>
@@ -125,6 +130,11 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            {currentUser && listing.userRef !== currentUser._id && !contact &&(
+            <button onClick={() => setContact(true)}className="bg-secondary text-white rounded-lg uppercase p-3 hover:opacity-90">
+                Contact Owner
+            </button> )}
+            {contact && <Contact listing={listing}/>}
           </div>
         </div>
       )}
