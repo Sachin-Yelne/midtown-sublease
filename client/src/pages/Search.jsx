@@ -133,7 +133,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === "all"}
               />
-              <span>Rent & Sale</span>
+              <span>Rent & Sublease</span>
             </div>
             <div className="flex gap-2">
               <input
@@ -153,7 +153,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === "sale"}
               />
-              <span>Sale</span>
+              <span>Sublease</span>
             </div>
             <div className="flex gap-2">
               <input
@@ -163,7 +163,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.offer}
               />
-              <span>Offer</span>
+              <span>Discount</span>
             </div>
           </div>
           <div className="flex gap-2 flex-wrap items-center">
@@ -203,13 +203,13 @@ export default function Search() {
               <option value="createdAt_asc">Oldest</option>
             </select>
           </div>
-          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
+          <button className="bg-secondary text-white p-3 rounded-lg uppercase hover:opacity-95">
             Search
           </button>
         </form>
       </div>
       <div className="">
-        <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
+        <h1 className="text-3xl font-semibold border-b p-3 text-secondary mt-5">
           Listing results:
         </h1>{" "}
       </div>
