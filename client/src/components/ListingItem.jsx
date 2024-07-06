@@ -32,7 +32,7 @@ export default function ListingItem({ listing }) {
             {listing.type === "sale" && " / month"}
             {listing.type === "rent" && " / day"}
           </p>
-          <div className="text-slate-700 flex">
+          <div className="text-secondary">
             <div className="flex items-center gap-1">
               <FaBed className="text-md w-3 text-secondary" />
               <div className="font-bold text-xs">

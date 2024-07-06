@@ -17,7 +17,8 @@ export default {
         'creme': '#F9F6E5',
         'buzz-gold': '#EAAA00',
         'red-error': '#E04F39',
-        'dark-gold': '#857437'
+        'dark-gold': '#857437',
+        'purple' : '#572700',
       },
     },
   },
