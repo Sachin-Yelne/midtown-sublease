@@ -6,13 +6,13 @@ import { Navigation } from "swiper/modules";
 import { useSelector } from "react-redux";
 import "swiper/css/bundle";
 import {
-    FaBath,
-    FaBed,
-    FaChair,
-    FaMapMarkerAlt,
-    FaParking,
-    FaShare,
-  } from 'react-icons/fa';
+  FaBath,
+  FaBed,
+  FaChair,
+  FaMapMarkerAlt,
+  FaParking,
+  FaShare,
+} from "react-icons/fa";
 import Contact from "../components/Contact";
 import { geocodeAddress, createMapEmbedUrl } from "../utils/geocoding";
 
@@ -22,10 +22,10 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
-  const [contact, setContact] = useState(false)
+  const [contact, setContact] = useState(false);
   const [mapUrl, setMapUrl] = useState(null);
   const params = useParams();
-  const {currentUser} = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -41,9 +41,15 @@ export default function Listing() {
         setLoading(false);
         setError(false);
         const address = `${data.street}, ${data.city}, ${data.state}, ${data.zipCode}`;
-        const placeId = await geocodeAddress(address, import.meta.env.VITE_MAP_API_KEY);
-        const url = createMapEmbedUrl(placeId, import.meta.env.VITE_MAP_API_KEY);
-        setMapUrl(url)
+        const placeId = await geocodeAddress(
+          address,
+          import.meta.env.VITE_MAP_API_KEY
+        );
+        const url = createMapEmbedUrl(
+          placeId,
+          import.meta.env.VITE_MAP_API_KEY
+        );
+        setMapUrl(url);
       } catch (error) {
         setError(true);
         setLoading(false);
@@ -51,10 +57,10 @@ export default function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
-  
+
   const formatAddress = (street, city, state, zipCode) => {
     const components = [street, city, state, zipCode];
-    return components.filter(Boolean).join(', ');
+    return components.filter(Boolean).join(", ");
   };
 
   return (
@@ -70,14 +76,17 @@ export default function Listing() {
               <SwiperSlide key={url}>
                 <div
                   className="h-[600px]"
-                  style={{ background: `url(${url}) center no-repeat`, backgroundSize: 'contain' }}
+                  style={{
+                    background: `url(${url}) center no-repeat`,
+                    backgroundSize: "contain",
+                  }}
                 ></div>
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
+          <div className="fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer">
             <FaShare
-              className='text-slate-500'
+              className="text-slate-500"
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href);
                 setCopied(true);
@@ -88,56 +97,62 @@ export default function Listing() {
             />
           </div>
           {copied && (
-            <p className='fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-100 p-2'>
+            <p className="fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-100 p-2">
               Link copied!
             </p>
           )}
-          <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-            <p className='text-2xl font-semibold'>
-              {listing.name} - ${' '}
+          <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
+            <p className="text-2xl font-semibold">
+              {listing.name} - ${" "}
               {listing.offer
-                ? listing.discountPrice.toLocaleString('en-US')
-                : listing.regularPrice.toLocaleString('en-US')}
-              {listing.type === 'rent' && ' / month'}
+                ? listing.discountPrice.toLocaleString("en-US")
+                : listing.regularPrice.toLocaleString("en-US")}
+              {listing.type === "rent" && " / month"}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-dark-gray  text-sm'>
-              <FaMapMarkerAlt className='text-primary' />
-              {formatAddress(listing.street, listing.city, listing.state, listing.zipCode)}
+            <p className="flex items-center mt-6 gap-2 text-dark-gray  text-sm">
+              <FaMapMarkerAlt className="text-primary" />
+              {formatAddress(
+                listing.street,
+                listing.city,
+                listing.state,
+                listing.zipCode
+              )}
             </p>
-            <div className='flex gap-4'>
-              <p className='bg-red-error w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                {listing.type === 'rent' ? 'For Rent' : 'For Sale!'}
+            <div className="flex gap-4">
+              <p className="bg-red-error w-full max-w-[200px] text-white text-center p-1 rounded-md">
+                {listing.type === "rent" ? "For Rent" : "For Sale!"}
               </p>
               {listing.offer && (
-                <p className='bg-green-700 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  Discounted ${+listing.regularPrice - +listing.discountPrice} / Month
+                <p className="bg-green-700 w-full max-w-[200px] text-white text-center p-1 rounded-md">
+                  Discounted ${+listing.regularPrice - +listing.discountPrice} /
+                  Month
                 </p>
               )}
             </div>
-            <p className='text-slate-800'>
-              <span className='font-semibold text-black'>Description - </span>
+            <p className="text-slate-800">
+              <span className="font-semibold text-black">Description - </span>
               {listing.description}
             </p>
-            <ul className='text-secondary font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaBed className='text-lg' />
+            <ul className="text-secondary font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaBed className="text-lg" />
                 {listing.bedrooms > 1
                   ? `${listing.bedrooms} beds `
                   : `${listing.bedrooms} bed `}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaBath className='text-lg' />
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaBath className="text-lg" />
                 {listing.bathrooms > 1
                   ? `${listing.bathrooms} baths `
                   : `${listing.bathrooms} bath `}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaParking className='text-lg' />
-                {listing.parking ? 'Parking spot' : 'No Parking'}
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaParking className="text-lg" />
+                {listing.parking ? "Parking spot" : "No Parking"}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FaChair className='text-lg' />
-                {listing.furnished ? 'Furnished' : 'Unfurnished'}
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaChair className="text-lg" />
+                {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
             {mapUrl && (
@@ -151,11 +166,15 @@ export default function Listing() {
                 ></iframe>
               </div>
             )}
-            {currentUser && listing.userRef !== currentUser._id && !contact &&(
-            <button onClick={() => setContact(true)}className="bg-secondary text-white rounded-lg uppercase p-3 hover:opacity-90">
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                onClick={() => setContact(true)}
+                className="bg-secondary text-white rounded-lg uppercase p-3 hover:opacity-90"
+              >
                 Contact Owner
-            </button> )}
-            {contact && <Contact listing={listing}/>}
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}

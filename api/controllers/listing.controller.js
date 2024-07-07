@@ -82,16 +82,39 @@ export const getListings = async (req, res, next) => {
     if (type === undefined || type === "all") {
       type = { $in: ["sale", "rent"] };
     }
+
+    // Handle date filter
+    const availableFrom = req.query.availableFrom
+      ? new Date(req.query.availableFrom)
+      : null;
+    const availableTo = req.query.availableTo
+      ? new Date(req.query.availableTo)
+      : null;
+
+    const dateFilter = {};
+    if (availableFrom && availableTo) {
+      // Listings that cover the entire date range specified by the user
+      dateFilter.availableFrom = { $lte: availableFrom };
+      dateFilter.availableTo = { $gte: availableTo };
+    } else if (availableFrom) {
+      // Listings that start on or before the specified start date
+      dateFilter.availableFrom = { $lte: availableFrom };
+    } else if (availableTo) {
+      // Listings that end on or after the specified end date
+      dateFilter.availableTo = { $gte: availableTo };
+    }
+
     const searchTerm = req.query.searchTerm || "";
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
     const listings = await Listing.find({
-      name: { $regex: searchTerm, $options: 'i' },
+      name: { $regex: searchTerm, $options: "i" },
       offer,
       furnished,
       parking,
       type,
+      ...dateFilter,
     })
       .sort({ [sort]: order })
       .limit(limit)

@@ -12,6 +12,8 @@ export default function Search() {
     offer: false,
     sort: "created_at",
     order: "desc",
+    availableFrom: "",
+    availableTo: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,8 @@ export default function Search() {
     const offerFromUrl = urlParams.get("offer");
     const sortFromUrl = urlParams.get("sort");
     const orderFromUrl = urlParams.get("order");
+    const availableFromUrl = urlParams.get("availableFrom");
+    const availableToUrl = urlParams.get("availableTo");
 
     if (
       searchTermFromUrl ||
@@ -34,7 +38,9 @@ export default function Search() {
       furnishedFromUrl ||
       offerFromUrl ||
       sortFromUrl ||
-      orderFromUrl
+      orderFromUrl ||
+      availableFromUrl ||
+      availableToUrl
     ) {
       setSidebardata({
         searchTerm: searchTermFromUrl || "",
@@ -44,12 +50,14 @@ export default function Search() {
         offer: offerFromUrl === "true" ? true : false,
         sort: sortFromUrl || "created_at",
         order: orderFromUrl || "desc",
+        availableFrom: availableFromUrl || "",
+        availableTo: availableToUrl || "",
       });
     }
 
     const fetchListings = async () => {
       setLoading(true);
-      setShowMore(false)
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
@@ -90,6 +98,10 @@ export default function Search() {
       });
     }
 
+    if (e.target.id === "availableFrom" || e.target.id === "availableTo") {
+      setSidebardata({ ...sidebardata, [e.target.id]: e.target.value });
+    }
+
     if (e.target.id === "sort_order") {
       const sort = e.target.value.split("_")[0] || "created_at";
 
@@ -101,6 +113,17 @@ export default function Search() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let { availableFrom, availableTo } = sidebardata;
+    if (
+      availableFrom &&
+      availableTo &&
+      new Date(availableFrom) > new Date(availableTo)
+    ) {
+      const temp = availableFrom;
+      availableFrom = availableTo;
+      availableTo = temp;
+      setSidebardata({ ...sidebardata, availableFrom, availableTo });
+    }
     const urlParams = new URLSearchParams();
     urlParams.set("searchTerm", sidebardata.searchTerm);
     urlParams.set("type", sidebardata.type);
@@ -109,24 +132,26 @@ export default function Search() {
     urlParams.set("offer", sidebardata.offer);
     urlParams.set("sort", sidebardata.sort);
     urlParams.set("order", sidebardata.order);
+    urlParams.set("availableFrom", sidebardata.availableFrom);
+    urlParams.set("availableTo", sidebardata.availableTo);
+
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
 
   const onShowMoreClick = async () => {
-    const numberOfListings = listings.length
-    const startIndex = numberOfListings
-    const urlParams = new URLSearchParams(location.search)
-    urlParams.set('startIndex', startIndex)
-    const searchQuery = urlParams.toString()
-    const res = await fetch(`/api/listing/get?${searchQuery}`)
-    const data = await res.json()
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
     if (data.length <= 9) {
-        setShowMore (false)
-
+      setShowMore(false);
     }
-    setListings([...listings, ...data])
-  }
+    setListings([...listings, ...data]);
+  };
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7  border-b-2 md:border-r-2 md:min-h-screen">
@@ -209,6 +234,26 @@ export default function Search() {
               />
               <span>Furnished</span>
             </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="font-semibold">Move In:</label>
+            <input
+              type="date"
+              id="availableFrom"
+              className="border rounded-lg p-3"
+              value={sidebardata.availableFrom}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="font-semibold">Move Out:</label>
+            <input
+              type="date"
+              id="availableTo"
+              className="border rounded-lg p-3"
+              value={sidebardata.availableTo}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Sort:</label>
