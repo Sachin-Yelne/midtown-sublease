@@ -183,51 +183,6 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.description}
           />
-          <input
-            type="text"
-            placeholder="Street address"
-            className="border p-3 rounded-lg"
-            id="street"
-            required
-            onChange={handleChange}
-            value={formData.street}
-          />
-                    <input
-            type="text"
-            placeholder="City"
-            className="border p-3 rounded-lg"
-            id="city"
-            required
-            onChange={handleChange}
-            value={formData.city}
-          />
-                    <input
-            type="text"
-            placeholder="State"
-            className="border p-3 rounded-lg"
-            id="state"
-            required
-            onChange={handleChange}
-            value={formData.state}
-          />
-                    <input
-            type="text"
-            placeholder="Country"
-            className="border p-3 rounded-lg"
-            id="country"
-            required
-            onChange={handleChange}
-            value={formData.country}
-          />
-                    <input
-            type="text"
-            placeholder="Zip Code"
-            className="border p-3 rounded-lg"
-            id="zipCode"
-            required
-            onChange={handleChange}
-            value={formData.zipCode}
-          />
           <div className="flex gap-6 flex-wrap">
             <div className="flex gap-2">
               <input
@@ -354,6 +309,51 @@ export default function CreateListing() {
           </div>
         </div>
         <div className="flex flex-col flex-1 gap-2">
+        <input
+            type="text"
+            placeholder="Street address"
+            className="border p-3 rounded-lg"
+            id="street"
+            required
+            onChange={handleChange}
+            value={formData.street}
+          />
+                    <input
+            type="text"
+            placeholder="City"
+            className="border p-3 rounded-lg"
+            id="city"
+            required
+            onChange={handleChange}
+            value={formData.city}
+          />
+                    <input
+            type="text"
+            placeholder="State"
+            className="border p-3 rounded-lg"
+            id="state"
+            required
+            onChange={handleChange}
+            value={formData.state}
+          />
+                    <input
+            type="text"
+            placeholder="Country"
+            className="border p-3 rounded-lg"
+            id="country"
+            required
+            onChange={handleChange}
+            value={formData.country}
+          />
+                    <input
+            type="text"
+            placeholder="Zip Code"
+            className="border p-3 rounded-lg"
+            id="zipCode"
+            required
+            onChange={handleChange}
+            value={formData.zipCode}
+          />
           <p className=" font-semibold">
             Images:
             <span className="font-normal text-dark-gray ml-2">
