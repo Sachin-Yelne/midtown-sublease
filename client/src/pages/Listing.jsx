@@ -107,7 +107,8 @@ export default function Listing() {
               {listing.offer
                 ? listing.discountPrice.toLocaleString("en-US")
                 : listing.regularPrice.toLocaleString("en-US")}
-              {listing.type === "rent" && " / month"}
+              {listing.type === "rent" && " / day"}
+              {listing.type === "sale" && " / month"}
             </p>
             <p className="flex items-center mt-6 gap-2 text-dark-gray  text-sm">
               <FaMapMarkerAlt className="text-primary" />

@@ -52,7 +52,7 @@ export default function SignUp() {
         <input type="email" placeholder= 'Email' className='border p-3 rounded-lg' id='email'onChange={handleChange} />
         <input type="password" placeholder= 'Password' className='border p-3 rounded-lg' id='password'onChange={handleChange} />
         <button disabled={loading} className='bg-secondary text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign Up'}</button>
-        <OAuthth/>
+        <OAuth/>
       </form>
       <div className=' text-dark-gray flex gap-2 mt-5'>
         <p>Have an account?</p>
