@@ -129,9 +129,22 @@ export default function Listing() {
                 </p>
               )}
             </div>
-            <p className="text-slate-800">
-              <span className="font-semibold text-black">Description - </span>
+            <p className="text-dark-gray">
+              <span className="font-bold">Description - </span>
               {listing.description}
+            </p>
+            <p className="text-dark-gray">
+              <span className="font-bold ">
+                Available Dates -{" "}
+              </span>
+              From{" "}
+              <span className='text-primary'style={{ fontWeight: "bold" }}>
+                {new Date(listing.availableFrom).toLocaleDateString()}
+              </span>{" "}
+              to{" "}
+              <span className='text-primary' style={{ fontWeight: "bold" }}>
+                {new Date(listing.availableTo).toLocaleDateString()}
+              </span>
             </p>
             <ul className="text-secondary font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
               <li className="flex items-center gap-1 whitespace-nowrap ">
