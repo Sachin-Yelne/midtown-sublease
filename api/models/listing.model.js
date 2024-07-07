@@ -78,6 +78,15 @@ const listingSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        availableFrom: {
+            type: Date,
+            required: true,
+        },
+        availableTo: {
+            type: Date,
+            required: true,
+        },
+
         
     }, {timestamps:true}
 )

@@ -31,6 +31,8 @@ export default function CreateListing() {
     offer: false,
     parking: false,
     furnished: false,
+    availableFrom: "",
+    availableTo: ""
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -133,7 +135,8 @@ export default function CreateListing() {
     if (
       e.target.type === "number" ||
       e.target.type === "text" ||
-      e.target.type === "textarea"
+      e.target.type === "textarea" ||
+      e.target.type === "date"
     ) {
       setFormData({
         ...formData,
@@ -202,6 +205,36 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.description}
           />
+          <div className="flex flex-col gap-2">
+            <div
+              htmlFor="availableFrom"
+              className=" font-semibold flex"
+            >
+              Start Lease:
+            </div>
+            <input
+              type="date"
+              className="border p-3 rounded-lg"
+              id="availableFrom"
+              required
+              onChange={handleChange}
+              value={formData.availableFrom}
+            />
+            <p
+              htmlFor="availableTo"
+              className=" font-semibold"
+            >
+              End Lease:
+            </p>
+            <input
+              type="date"
+              className="border p-3 rounded-lg"
+              id="availableTo"
+              required
+              onChange={handleChange}
+              value={formData.availableTo}
+            />
+          </div>  
           
           <div className="flex gap-6 flex-wrap">
             <div className="flex gap-2">
