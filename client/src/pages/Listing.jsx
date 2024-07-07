@@ -13,8 +13,8 @@ import {
     FaParking,
     FaShare,
   } from 'react-icons/fa';
-import { current } from "@reduxjs/toolkit";
 import Contact from "../components/Contact";
+import { geocodeAddress, createMapEmbedUrl } from "../utils/geocoding";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -23,6 +23,7 @@ export default function Listing() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
   const [contact, setContact] = useState(false)
+  const [mapUrl, setMapUrl] = useState(null);
   const params = useParams();
   const {currentUser} = useSelector((state) => state.user)
   useEffect(() => {
@@ -39,6 +40,10 @@ export default function Listing() {
         setListing(data);
         setLoading(false);
         setError(false);
+        const address = `${data.street}, ${data.city}, ${data.state}, ${data.zipCode}`;
+        const placeId = await geocodeAddress(address, import.meta.env.VITE_MAP_API_KEY);
+        const url = createMapEmbedUrl(placeId, import.meta.env.VITE_MAP_API_KEY);
+        setMapUrl(url)
       } catch (error) {
         setError(true);
         setLoading(false);
@@ -46,6 +51,12 @@ export default function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
+  
+  const formatAddress = (street, city, state, zipCode) => {
+    const components = [street, city, state, zipCode];
+    return components.filter(Boolean).join(', ');
+  };
+
   return (
     <main>
       {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
@@ -58,8 +69,8 @@ export default function Listing() {
             {listing.imageURLs.map((url) => (
               <SwiperSlide key={url}>
                 <div
-                  className="h-[550px]"
-                  style={{ background: `url(${url}) center no-repeat`, backgroundSize: 'cover' }}
+                  className="h-[600px]"
+                  style={{ background: `url(${url}) center no-repeat`, backgroundSize: 'contain' }}
                 ></div>
               </SwiperSlide>
             ))}
@@ -89,9 +100,9 @@ export default function Listing() {
                 : listing.regularPrice.toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-secondary  text-sm'>
-              <FaMapMarkerAlt className='text-dark-gray' />
-              {listing.address}
+            <p className='flex items-center mt-6 gap-2 text-dark-gray  text-sm'>
+              <FaMapMarkerAlt className='text-primary' />
+              {formatAddress(listing.street, listing.city, listing.state, listing.zipCode)}
             </p>
             <div className='flex gap-4'>
               <p className='bg-red-error w-full max-w-[200px] text-white text-center p-1 rounded-md'>
@@ -129,6 +140,17 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            {mapUrl && (
+              <div className="mt-4">
+                <iframe
+                  width="75%"
+                  height="400"
+                  style={{ border: 0 }}
+                  src={mapUrl}
+                  allowFullScreen
+                ></iframe>
+              </div>
+            )}
             {currentUser && listing.userRef !== currentUser._id && !contact &&(
             <button onClick={() => setContact(true)}className="bg-secondary text-white rounded-lg uppercase p-3 hover:opacity-90">
                 Contact Owner

@@ -17,7 +17,11 @@ export default function CreateListing() {
     imageURLs: [],
     name: "",
     description: "",
-    address: "",
+    street: "",
+    city: "",
+    state: "",
+    country: "",
+    zipCode: "",
     type: "rent",
     bedrooms: 1,
     bathrooms: 1,
@@ -121,7 +125,6 @@ export default function CreateListing() {
       });
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -182,12 +185,48 @@ export default function CreateListing() {
           />
           <input
             type="text"
-            placeholder="Address"
+            placeholder="Street address"
             className="border p-3 rounded-lg"
-            id="address"
+            id="street"
             required
             onChange={handleChange}
-            value={formData.address}
+            value={formData.street}
+          />
+                    <input
+            type="text"
+            placeholder="City"
+            className="border p-3 rounded-lg"
+            id="city"
+            required
+            onChange={handleChange}
+            value={formData.city}
+          />
+                    <input
+            type="text"
+            placeholder="State"
+            className="border p-3 rounded-lg"
+            id="state"
+            required
+            onChange={handleChange}
+            value={formData.state}
+          />
+                    <input
+            type="text"
+            placeholder="Country"
+            className="border p-3 rounded-lg"
+            id="country"
+            required
+            onChange={handleChange}
+            value={formData.country}
+          />
+                    <input
+            type="text"
+            placeholder="Zip Code"
+            className="border p-3 rounded-lg"
+            id="zipCode"
+            required
+            onChange={handleChange}
+            value={formData.zipCode}
           />
           <div className="flex gap-6 flex-wrap">
             <div className="flex gap-2">

@@ -3,6 +3,10 @@ import { MdLocationOn } from "react-icons/md";
 import { FaBath, FaBed } from "react-icons/fa";
 
 export default function ListingItem({ listing }) {
+    const formatAddress = (street, city, state, zipCode) => {
+      const components = [street, city, state, zipCode];
+      return components.filter(Boolean).join(', ');
+    };
   return (
     <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]">
       <Link to={`/listing/${listing._id}`}>
@@ -18,7 +22,7 @@ export default function ListingItem({ listing }) {
           <div className="flex items-center gap-1">
             <MdLocationOn className="h-4 w-4 text-primary" />
             <p className="text-sm text-dark-gray truncate w-full">
-              {listing.address}
+            {formatAddress(listing.street, listing.city, listing.state, listing.zipCode)}
             </p>
           </div>
           <p className="text-sm text-dark-gray line-clamp-3">
