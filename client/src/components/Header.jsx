@@ -47,6 +47,16 @@ export default function Header() {
           </button>
         </form>
         <ul className="flex gap-4">
+        <Link to="/search">
+            <li className="hidden sm:inline text-creme hover:underline">
+              Browse
+            </li>
+          </Link>
+        <Link to="/profile">
+            <li className="hidden sm:inline text-creme hover:underline">
+              Create Listing
+            </li>
+          </Link>
           <Link to="/">
             <li className="hidden sm:inline text-creme hover:underline">
               Home
