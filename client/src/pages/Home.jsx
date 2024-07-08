@@ -75,7 +75,7 @@ export default function Home() {
               background: `url(${imageURL}) center no-repeat`,
               backgroundSize: "cover",
             }}
-            className="h-[600px]"
+            className="h-[601px]"
           ></div>
 
 
