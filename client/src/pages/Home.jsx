@@ -10,7 +10,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
-  const imageURL = "https://www.trulia.com/pictures/thumbs_5/zillowstatic/fp/bbc7bf2440d00190e058fb053c3d7069-f_b.jpg"
+  const imageURL = "https://firebasestorage.googleapis.com/v0/b/mern-gt-sublease.appspot.com/o/Designer.png?alt=media&token=caf6abf9-a45d-460a-8d13-b09a0fa7bf92"
 
   SwiperCore.use([Navigation]);
   console.log(offerListings);
