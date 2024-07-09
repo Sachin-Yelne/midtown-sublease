@@ -26,7 +26,7 @@ export default function CreateListing() {
     type: "rent",
     bedrooms: 1,
     bathrooms: 1,
-    regularPrice: 50,
+    regularPrice: 5,
     discountPrice: 0,
     offer: false,
     parking: false,
@@ -72,7 +72,7 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image upload failed (2 mb max per image)");
+          setImageUploadError("Image upload failed (5 mb max per image)");
           setUploading(false);
         });
     } else {
@@ -315,7 +315,7 @@ export default function CreateListing() {
               <input
                 type="number"
                 id="regularPrice"
-                min="50"
+                min="5"
                 max="1000000"
                 required
                 className="p-3 border border-gray-400 rounded-lg"
